@@ -18,3 +18,4 @@ mongoose
     .catch((error) => {
         console.log(error);
     });
+mongoose.connection.on("error", (error: Error) => console.log(error));
