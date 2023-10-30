@@ -1,13 +1,19 @@
 import express from "express";
 import mongoose from "mongoose";
 import config from "./server-config";
+import { errorHandler, notFound } from "./middleware/errorMiddleware";
 import adminRoutes from "./routes/AdminRoute";
 
 const app = express();
 const port = config.port;
 const db_url = config.db_url;
 
+// routes
 app.use("/api/admin", adminRoutes);
+
+// error handling
+app.use(errorHandler);
+app.use(notFound);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
