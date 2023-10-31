@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { genSalt, hash } from "bcrypt";
 
 const adminSchema = new mongoose.Schema(
     {
@@ -21,5 +22,14 @@ const adminSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+adminSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        next();
+    }
+
+    const salt = await genSalt(10);
+    this.password = await hash(this.password, salt);
+});
 
 export const Admin = mongoose.model("Admin", adminSchema);
