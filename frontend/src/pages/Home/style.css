@@ -1,0 +1,30 @@
+.background-options {
+    background: rgb(255,250,0);
+    background: radial-gradient(circle, rgba(255,250,0,1) 0%, rgba(79,22,2,1) 69%);
+}
+
+.home-options {
+    padding: 8rem;
+    color: white;
+    border-radius: 0.5rem;
+    background: rgba(79,22,2,0.4);
+    text-align: center;
+    transition: .5s all;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.home-options:hover {
+    background: rgba(79,22,2,0.8);
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.icons {
+    font-size: 50px;
+    width: 5rem;
+    height: 5rem;
+}
