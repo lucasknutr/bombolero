@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { Admin } from "../models/adminModel";
+import generateJWT from "../utils/generateJWT";
 
 // @desc    Registers admin
 // route    POST /api/admin/register
@@ -37,6 +38,7 @@ const registerAdmin = asyncHandler(async (req: Request, res: Response) => {
     });
 
     if (admin) {
+        generateJWT(res, admin._id);
         res.status(201).json({
             _id: admin._id,
             email: admin.email,
