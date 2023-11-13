@@ -7,7 +7,7 @@ import adminRoutes from "./routes/AdminRoute";
 // Initialize app
 const app = express();
 const port = config.port;
-const db_url = config.db_url;
+const db_url = config.dbUri;
 
 // Middleware
 app.use(express.json());

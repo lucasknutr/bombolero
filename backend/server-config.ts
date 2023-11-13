@@ -1,8 +1,9 @@
 require("dotenv").config({ path: __dirname + "/.env" });
 
 const config = {
-    port: 3001,
-    db_url: process.env.DB_URI!,
+    port: process.env.PORT!,
+    dbUri: process.env.DB_URI!,
+    jwtKey: process.env.JWT_KEY!,
 };
 
 export default config;
