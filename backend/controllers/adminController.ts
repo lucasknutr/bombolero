@@ -79,7 +79,12 @@ const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
 // route    POST /api/admin/logout
 // @access  Public
 const logoutAdmin = asyncHandler(async (req: Request, res: Response) => {
-    res.status(200).json({ message: "Logout Admin" });
+    res.cookie("jwt", "", {
+        httpOnly: true,
+        expires: new Date(0),
+    })
+    
+    res.status(200).json({ message: "Admin logged out" });
 });
 
 export { registerAdmin, loginAdmin, logoutAdmin };
