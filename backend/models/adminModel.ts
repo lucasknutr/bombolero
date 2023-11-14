@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
+import { Document, Model } from "mongoose";
 import { genSalt, hash, compare } from "bcrypt";
+
+export interface AdminDocument extends Document {
+    email: string,
+    username: string,
+    password: string,
+    comparePassword(inputPassword: string): Promise<boolean>,
+}
+
+export interface AdminModel extends Model<AdminDocument> {}
 
 const adminSchema = new mongoose.Schema(
     {
@@ -32,10 +42,10 @@ adminSchema.pre("save", async function (next) {
     this.password = await hash(this.password, salt);
 });
 
-adminSchema.methods.comparePassword = async function(inputPassword: string) {
+adminSchema.methods.comparePassword = async function(inputPassword: string): Promise<boolean> {
     return await compare(inputPassword, this.password);
 };
 
-const Admin = mongoose.model("Admin", adminSchema);
+const Admin = mongoose.model<AdminDocument, AdminModel>("Admin", adminSchema);
 
 export default Admin;
