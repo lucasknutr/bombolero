@@ -68,7 +68,7 @@ const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
     }
 
     generateJWT(res, admin._id);
-    res.status(201).json({
+    res.status(200).json({
         _id: admin._id,
         email: admin.email,
         username: admin.username,
