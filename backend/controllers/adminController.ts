@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import { Admin } from "../models/adminModel";
+import Admin from "../models/adminModel";
 import generateJWT from "../utils/generateJWT";
 
 // @desc    Registers admin
@@ -44,6 +44,9 @@ const registerAdmin = asyncHandler(async (req: Request, res: Response) => {
             email: admin.email,
             username: admin.username,
         });
+    } else {
+        res.status(400);
+        throw new Error("Something went wrong");
     }
 });
 
@@ -51,7 +54,25 @@ const registerAdmin = asyncHandler(async (req: Request, res: Response) => {
 // route    POST /api/admin/login
 // @access  Public
 const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
-    res.status(200).json({ message: "Login Admin" });
+    const { username, password } = req.body;
+    const admin = await Admin.findOne({ username });
+
+    if (!admin) {
+        res.status(400);
+        throw new Error("Username not found");
+    }
+
+    if (!await admin.comparePassword(password)) {
+        res.status(400);
+        throw new Error("Invalid password");    
+    }
+
+    generateJWT(res, admin._id);
+    res.status(201).json({
+        _id: admin._id,
+        email: admin.email,
+        username: admin.username,
+    });
 });
 
 // @desc    Logs out admin

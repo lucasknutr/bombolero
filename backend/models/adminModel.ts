@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { genSalt, hash } from "bcrypt";
+import { genSalt, hash, compare } from "bcrypt";
 
 const adminSchema = new mongoose.Schema(
     {
@@ -32,4 +32,10 @@ adminSchema.pre("save", async function (next) {
     this.password = await hash(this.password, salt);
 });
 
-export const Admin = mongoose.model("Admin", adminSchema);
+adminSchema.methods.comparePassword = async function(inputPassword: string) {
+    return await compare(inputPassword, this.password);
+};
+
+const Admin = mongoose.model("Admin", adminSchema);
+
+export default Admin;
