@@ -1,4 +1,13 @@
 import mongoose from "mongoose";
+import { Document, Model } from "mongoose";
+
+export interface CakeDocument extends Document {
+    name: string,
+    price: number,
+    description: string,
+}
+
+export interface CakeModel extends Model<CakeDocument> {}
 
 const cakeSchema = new mongoose.Schema({
     name: {
@@ -12,4 +21,6 @@ const cakeSchema = new mongoose.Schema({
     description: String,
 });
 
-export const Cake = mongoose.model("Cake", cakeSchema);
+const Cake = mongoose.model<CakeDocument, CakeModel>("Cake", cakeSchema);
+
+export default Cake;
