@@ -6,7 +6,7 @@ import ChecklistIcon from '@mui/icons-material/Checklist';
 const Home = () => {
   return (
     <>
-    <div className="background-options flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen">
         <div className="grid grid-cols-2 grid-rows-2 gap-4">
                 <div className="home-options">
                     <CurrencyExchangeIcon className='icons' style={{ fontSize: 60 }}/>
