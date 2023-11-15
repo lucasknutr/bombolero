@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 import config from "./server-config";
 import { errorHandler, notFound } from "./middleware/errorMiddleware";
 import adminRoutes from "./routes/AdminRoute";
@@ -12,6 +13,7 @@ const db_url = config.dbUri;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes
 app.use("/api/admin", adminRoutes);
