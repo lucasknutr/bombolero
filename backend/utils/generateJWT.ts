@@ -8,7 +8,7 @@ function generateJWT(res: Response, userId: ObjectId) {
         expiresIn: "7d",
     });
 
-    res.cookie("jwt", {
+    res.cookie("jwt", token, {
         httpOnly: true,
         secure: config.nodeEnv === "development" ? false : true,
         sameSite: "strict",

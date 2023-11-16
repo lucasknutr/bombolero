@@ -1,9 +1,16 @@
+import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import Admin from "../models/adminModel";
 import config from "../server-config";
 
-const protectRoute = asyncHandler(async (req, res, next) => {
+declare module 'jsonwebtoken' {
+    export interface JwtPayload {
+        userId: string,
+    }
+}
+
+const protectRoute = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.jwt;
 
     if (!token) {
@@ -12,7 +19,7 @@ const protectRoute = asyncHandler(async (req, res, next) => {
     }
 
     try {
-        const decodedToken = jwt.verify(token, config.jwtKey);
+        const decodedToken = jwt.verify(token, config.jwtKey) as JwtPayload;
         req.user = await Admin.findById(decodedToken.userId).select("-password");
         next();
     } catch (err) {
